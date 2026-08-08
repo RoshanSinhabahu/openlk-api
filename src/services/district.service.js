@@ -18,7 +18,7 @@ export async function getAllDistricts() {
     return result.rows;
 }
 
-export async function findDistrictsByProvince(provinceId) {
+export async function findDistrictsByProvince(provinceSlug) {
     const result = await db.query(
         `
         SELECT
@@ -26,10 +26,12 @@ export async function findDistrictsByProvince(provinceId) {
             districts.name,
             districts.code
         FROM districts
-        WHERE districts.province_id = $1
+        JOIN provinces
+            ON districts.province_id = provinces.id
+        WHERE provinces.slug = $1
         ORDER BY districts.id
         `,
-        [provinceId]
+        [provinceSlug]
     );
 
     return result.rows;

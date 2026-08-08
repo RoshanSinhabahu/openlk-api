@@ -1,5 +1,5 @@
 import { getAllProvinces } from "../services/province.service.js";
-
+import { successResponse, errorResponse } from "../utils/response.js";
 
 export async function getProvinces(req, res) {
 
@@ -7,13 +7,12 @@ export async function getProvinces(req, res) {
 
         const provinces = await getAllProvinces();
 
-        res.json(provinces);
+        return successResponse(res, provinces);
 
     } catch (error) {
-
-        res.status(500).json({
-            message: error.message
-        });
+        
+        console.error(error);
+        return errorResponse(res,"Failed to retrieve provinces");
 
     }
 

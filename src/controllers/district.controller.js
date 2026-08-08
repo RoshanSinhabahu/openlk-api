@@ -1,45 +1,24 @@
 import { getAllDistricts, findDistrictsByProvince } from "../services/district.service.js";
+import { successResponse, errorResponse } from "../utils/response.js";
 
 export async function getDistricts(req, res) {
     try {
-        const districts = await getAllDistricts();
+        const { province } = req.query;
+        const normalizedProvince = province?.toLowerCase();
 
-        const formattedDistricts = districts.map((district) => ({
-            id: district.id,
-            name: district.district_name,
-            code: district.district_code,
+        let districts;
 
-            province: {
-                id: district.province_id,
-                name: district.province_name,
-                code: district.province_code
-            }
-        }));
+        if (normalizedProvince) {
+            districts = await findDistrictsByProvince(normalizedProvince);
+        } else {
+            districts = await getAllDistricts();
+        }
 
-        res.json(formattedDistricts);
+        return successResponse(res, districts);
 
     } catch (error) {
         console.error(error);
 
-        res.status(500).json({
-            message: "Failed to retrieve districts"
-        });
-    }
-}
-
-export async function getDistrictsByProvince(req, res) {
-    try {
-        const { provinceId } = req.params;
-
-        const districts = await findDistrictsByProvince(provinceId);
-
-        res.json(districts);
-
-    } catch (error) {
-        console.error(error);
-
-        res.status(500).json({
-            message: "Failed to retrieve districts"
-        });
+        return errorResponse(res, "Failed to retrieve districts");
     }
 }
