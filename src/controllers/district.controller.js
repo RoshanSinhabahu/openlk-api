@@ -1,10 +1,31 @@
-import { getAllDistricts, findDistrictsByProvince } from "../services/district.service.js";
-import { successResponse, errorResponse } from "../utils/response.js";
+import { getAllDistricts,findDistrictsByProvince } from "../services/district.service.js";
 
-export async function getDistricts(req, res) {
+import { successResponse } from "../utils/response.js";
+import { PROVINCE_SLUGS } from "../constants/provinces.js";
+
+export async function getDistricts(req, res, next) {
     try {
         const { province } = req.query;
+
+        if (province !== undefined && province.trim() === "") {
+
+            const error = new Error("Province cannot be empty");
+            error.statusCode = 400;
+
+            return next(error);
+        }
+
         const normalizedProvince = province?.toLowerCase();
+
+        if (
+            normalizedProvince &&
+            !PROVINCE_SLUGS.includes(normalizedProvince)
+        ) {
+            const error = new Error("Invalid province");
+            error.statusCode = 400;
+
+            return next(error);
+        }
 
         let districts;
 
@@ -14,11 +35,20 @@ export async function getDistricts(req, res) {
             districts = await getAllDistricts();
         }
 
+        districts = districts.map((district) => ({
+            id: district.id,
+            name: district.district_name,
+            code: district.district_code,
+            province: {
+                id: district.province_id,
+                name: district.province_name,
+                code: district.province_code
+            }
+        }));
+
         return successResponse(res, districts);
-
+        
     } catch (error) {
-        console.error(error);
-
-        return errorResponse(res, "Failed to retrieve districts");
+        next(error);
     }
 }

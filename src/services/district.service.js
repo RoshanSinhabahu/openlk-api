@@ -23,8 +23,11 @@ export async function findDistrictsByProvince(provinceSlug) {
         `
         SELECT
             districts.id,
-            districts.name,
-            districts.code
+            districts.name AS district_name,
+            districts.code AS district_code,
+            provinces.id AS province_id,
+            provinces.name AS province_name,
+            provinces.code AS province_code
         FROM districts
         JOIN provinces
             ON districts.province_id = provinces.id
