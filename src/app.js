@@ -3,6 +3,7 @@ import cors from "cors";
 
 import provinceRoutes from "./routes/province.routes.js";
 import districtRoutes from "./routes/district.routes.js";
+import divisionalSecretariatRoutes from "./routes/divisional-secretariat.routes.js";
 import { errorMiddleware } from "./middleware/error.middleware.js";
 
 import swaggerUi from "swagger-ui-express";
@@ -17,6 +18,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use("/api/v1", provinceRoutes);
 app.use("/api/v1", districtRoutes);
+app.use("/api/v1", divisionalSecretariatRoutes);
 
 app.use(errorMiddleware);
 
