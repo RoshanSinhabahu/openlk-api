@@ -9,3 +9,31 @@ export const PROVINCE_SLUGS = [
     "uva",
     "sabaragamuwa"
 ];
+
+export const DISTRICT_SLUGS = [
+    "colombo",
+    "gampaha",
+    "kalutara",
+    "kandy",
+    "matale",
+    "nuwara-eliya",
+    "galle",
+    "matara",
+    "hambantota",
+    "jaffna",
+    "kilinochchi",
+    "mannar",
+    "mullaitivu",
+    "vavuniya",
+    "batticaloa",
+    "ampara",
+    "trincomalee",
+    "kurunegala",
+    "puttalam",
+    "anuradhapura",
+    "polonnaruwa",
+    "badulla",
+    "monaragala",
+    "ratnapura",
+    "kegalle"
+];

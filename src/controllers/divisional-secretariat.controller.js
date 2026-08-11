@@ -1,7 +1,5 @@
-import {
-    getAllDivisionalSecretariats,
-    findDivisionalSecretariatsByDistrict
-} from "../services/divisional-secretariat.service.js";
+import { getAllDivisionalSecretariats,findDivisionalSecretariatsByDistrict } from "../services/divisional-secretariat.service.js";
+import { PROVINCE_SLUGS,DISTRICT_SLUGS } from "../constants/provinces.js";
 
 import { successResponse } from "../utils/response.js";
 
@@ -12,16 +10,28 @@ export async function getDivisionalSecretariats(req, res, next) {
         let divisionalSecretariats;
         let data;
 
-        // if (district !== undefined && districts.trim() === "") {
+        if (district !== undefined && district.trim() === "") {
 
-        //     const error = new Error("Province cannot be empty");
-        //     error.statusCode = 400;
+             const error = new Error("District cannot be empty");
+             error.statusCode = 400;
 
-        //     return next(error);
-        // }
+             return next(error);
+        }
 
-        if (district) {
-            divisionalSecretariats = await findDivisionalSecretariatsByDistrict(district.toLowerCase());
+        const normalizedDistricts = district?.toLowerCase();
+
+        if (
+            normalizedDistricts &&
+            !DISTRICT_SLUGS.includes(normalizedDistricts)
+        ) {
+            const error = new Error("Invalid district, Check for spellings or documentation!");
+            error.statusCode = 400;
+
+            return next(error);
+        }
+
+        if (normalizedDistricts) {
+            divisionalSecretariats = await findDivisionalSecretariatsByDistrict(normalizedDistricts);
                 data = divisionalSecretariats.map((ds) => ({
                     id: ds.id,
                     name: ds.name,

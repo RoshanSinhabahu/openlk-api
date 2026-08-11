@@ -1,5 +1,4 @@
 import { getAllDistricts,findDistrictsByProvince } from "../services/district.service.js";
-
 import { successResponse } from "../utils/response.js";
 import { PROVINCE_SLUGS } from "../constants/provinces.js";
 
@@ -21,7 +20,7 @@ export async function getDistricts(req, res, next) {
             normalizedProvince &&
             !PROVINCE_SLUGS.includes(normalizedProvince)
         ) {
-            const error = new Error("Invalid province");
+            const error = new Error("Invalid province, Check for spellings or documentation!");
             error.statusCode = 400;
 
             return next(error);
