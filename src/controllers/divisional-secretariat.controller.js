@@ -28,13 +28,13 @@ export async function getDivisionalSecretariats(req, res, next) {
              return next(error);
         }
 
-        const normalizedDistricts = district?.toLowerCase();
+        const normalizedDistrict = district?.toLowerCase();
         const normalizedProvince = province?.toLowerCase();
 
         //error if wrong
         if (
-            normalizedDistricts &&
-            !DISTRICT_SLUGS.includes(normalizedDistricts)
+            normalizedDistrict &&
+            !DISTRICT_SLUGS.includes(normalizedDistrict)
         ) {
             const error = new Error("Invalid district, Check for spellings or documentation!");
             error.statusCode = 400;
@@ -52,8 +52,8 @@ export async function getDivisionalSecretariats(req, res, next) {
             return next(error);
         }
 
-        if (normalizedDistricts) {
-            divisionalSecretariats = await findDivisionalSecretariatsByDistrict(normalizedDistricts);
+        if (normalizedDistrict) {
+            divisionalSecretariats = await findDivisionalSecretariatsByDistrict(normalizedDistrict);
                 data = divisionalSecretariats.map((ds) => ({
                     id: ds.id,
                     name: ds.name,
