@@ -36,8 +36,9 @@ export async function getDistricts(req, res, next) {
 
         districts = districts.map((district) => ({
             id: district.id,
-            name: district.district_name,
-            code: district.district_code,
+            name: district.name,
+            code: district.code,
+            ds_count: district.divisional_secretariat_count,
             province: {
                 id: district.province_id,
                 name: district.province_name,
