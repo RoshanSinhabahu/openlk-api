@@ -58,6 +58,7 @@ export async function getDivisionalSecretariats(req, res, next) {
                     id: ds.id,
                     name: ds.name,
                     slug: ds.slug,
+                    gn_division_count : ds.gn_division_count,
 
                     district: {
                         id: ds.district_id,
@@ -77,6 +78,7 @@ export async function getDivisionalSecretariats(req, res, next) {
                     id: ds.id,
                     name: ds.name,
                     slug: ds.slug,
+                    gn_division_count : ds.gn_division_count,
 
                     district: {
                         id: ds.district_id,
@@ -98,6 +100,7 @@ export async function getDivisionalSecretariats(req, res, next) {
                     id: ds.id,
                     name: ds.name,
                     slug: ds.slug,
+                    gn_division_count : ds.gn_division_count,
 
                     district: {
                         id: ds.district_id,

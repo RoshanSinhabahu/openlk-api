@@ -6,6 +6,7 @@ export async function getAllDivisionalSecretariats() {
             ds.id,
             ds.name,
             ds.slug,
+            ds.gn_division_count,
             d.id AS district_id,
             d.name AS district_name,
             d.code AS district_code
@@ -25,6 +26,7 @@ export async function findDivisionalSecretariatsByDistrict(districtSlug) {
             ds.id,
             ds.name,
             ds.slug,
+            ds.gn_division_count,
             d.id AS district_id,
             d.name AS district_name,
             d.code AS district_code,
@@ -52,6 +54,7 @@ export async function findDivisionalSecretariatsByProvince(provinceSlug) {
             ds.id,
             ds.name,
             ds.slug,
+            ds.gn_division_count,
             d.id AS district_id,
             d.name AS district_name,
             d.code AS district_code,
